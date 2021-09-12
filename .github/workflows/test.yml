@@ -1,0 +1,16 @@
+name: test
+
+on: push
+
+jobs:
+  jest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.0
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      - run: yarn install --ignore-optional --frozen-lockfile --prefer-offline
+      - run: yarn test
