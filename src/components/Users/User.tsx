@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
-import { UsersContext } from '../../context/Users';
+import { UsersContext } from 'context/Users';
 
 import type { VFC } from 'react';
 
@@ -17,7 +17,7 @@ export const User: VFC<{}> = () => {
     if (!user) return;
 
     dispatch({ type: 'DELETE', payload: user });
-    history.push('/users', { deleted: user });
+    history.push('/', { deletedUser: user }); // Back to the users list with the user we just deleted.
   }, [history, dispatch, user]);
 
   if (loading) return <h3>Loading…</h3>;
