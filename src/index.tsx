@@ -2,11 +2,11 @@ import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import './global.css';
 
-import { App } from 'containers/App';
+import { Router } from 'components/Router';
 
 render(
   <StrictMode>
-    <App />
+    <Router />
   </StrictMode>,
   document.getElementById('root')
 );
