@@ -1,8 +1,9 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import type { VFC } from 'react';
+
+export const App: VFC<{}> = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -22,5 +23,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
