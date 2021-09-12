@@ -2,11 +2,11 @@ import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import './global.css';
 
-import { App } from 'containers/App';
+import { UsersRouter } from 'containers/Users';
 
 render(
   <StrictMode>
-    <App />
+    <UsersRouter />
   </StrictMode>,
   document.getElementById('root')
 );
