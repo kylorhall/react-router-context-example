@@ -8,7 +8,7 @@ import type { VFC } from 'react';
 
 export const Users: VFC<{}> = () => {
   const location = useLocation<{ deleted: User }>();
-  const { users, dispatch, refresh } = useContext(UsersContext);
+  const { users, loading, error, dispatch, refresh } = useContext(UsersContext);
 
   const showRestore = useMemo(() => {
     if (!location.state?.deleted) return false;
@@ -18,6 +18,8 @@ export const Users: VFC<{}> = () => {
 
     return true;
   }, [users, location.state?.deleted]);
+
+  if (loading) return <h3>Loading…</h3>;
 
   return <div>
     <h3>Users: {users.length}</h3>
@@ -30,6 +32,8 @@ export const Users: VFC<{}> = () => {
     )}
 
     <button onClick={() => refresh()}>Refresh Users</button>
+
+    {error && <h4>Error: {error}</h4>}
 
     <ul>
       {users.map(user => (

@@ -7,15 +7,22 @@ import { usersReducer } from './reducer';
 import type { ReactNode, VFC } from 'react';
 
 export const UsersProvider: VFC<{ children: ReactNode }> = ({ children }) => {
+  const [error, setError] = useState(defaultUsersContext.error);
   const [loading, setLoading] = useState(defaultUsersContext.loading);
   const [users, dispatch] = useReducer(usersReducer, defaultUsersContext.users);
 
   const initializeUsers = useCallback(async () => {
-    const { data } = await axios('https://jsonplaceholder.typicode.com/users')
+    try {
+      const { data } = await axios('https://jsonplaceholder.typicode.com/users')
 
-    dispatch({ type: 'INIT', payload: data });
-    setLoading(false);
-  }, [dispatch, setLoading]);
+      dispatch({ type: 'INIT', payload: data });
+      setError(undefined);
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch, setLoading, setError]);
 
   /** Load all users initially. */
   useEffect(() => {
@@ -24,10 +31,11 @@ export const UsersProvider: VFC<{ children: ReactNode }> = ({ children }) => {
   
   const contextValue = useMemo(() => ({
     users,
+    error,
     dispatch,
     loading,
     refresh: initializeUsers,
-  }), [users, dispatch, loading, initializeUsers])
+  }), [users, error, dispatch, loading, initializeUsers])
 
   return (
     <UsersContext.Provider value={contextValue}>

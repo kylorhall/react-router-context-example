@@ -7,7 +7,7 @@ import type { VFC } from 'react';
 
 export const User: VFC<{}> = () => {
   const history = useHistory();
-  const { users, loading, dispatch } = useContext(UsersContext);
+  const { users, error, loading, dispatch } = useContext(UsersContext);
   const { userId } = useParams<{ userId?: string }>();
 
   /** Finds the user for the current page; undefined if a user enters an invalid user id. */
@@ -25,6 +25,8 @@ export const User: VFC<{}> = () => {
 
   return (
     <div>
+      {error && <h4>Error: {error}</h4>}
+
       <ul>
         <li>id: {user.id}</li>
         <li>name: {user.name}</li>
